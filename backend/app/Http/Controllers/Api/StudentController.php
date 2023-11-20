@@ -37,8 +37,16 @@ class StudentController extends Controller
             $student->phone = $request->phone;
 
             $student->save();
-        }catch(err){
-            return response()->json(err);
+
+            return response()->json([
+                "status" => true,
+                "message" => "Student has been saved to database",
+            ]);
+        }catch(\Throwable $th){
+            return response()->json([
+                "status" => false,
+                "message" => $th->getMessage()
+            ], 500);
         }
     }
 
