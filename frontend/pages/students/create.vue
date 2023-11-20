@@ -1,19 +1,34 @@
 <script setup>
 import { reactive } from 'vue';
+import useStudent from '../../composables/student';
 
-const student = reactive({
+const { storeStudents } = useStudent();
+
+const initialState = {
     name: '',
     course: '',
     email: '',
     phone: '',
-});
+};
+
+const student = reactive({...initialState});
 
 const isLoading = ref(false);
 const isLoadingTitle = ref('Loading');
 
-const saveStudent = () =>{
+const saveStudent = async() => {
     isLoading.value = true;
     isLoadingTitle.value = 'Saving';
+
+    try{
+        await storeStudents(student);
+    }catch(err){
+        console.log(err);
+    }finally{
+        isLoading.value = false;
+        isLoadingTitle.value = 'Loading';
+        Object.assign(student, initialState);
+    }
 }
 
 </script>
