@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const useStudent = () =>{
     const students = ref([]);
     const student = ref({});
@@ -6,12 +7,14 @@ const useStudent = () =>{
 
     const baseURL = 'http://127.0.0.1:8000/api';
 
-    const getStudents = async() =>{
+    const getStudents = async() => {
         try{
             const response = await axios.get(baseURL+'/getStudents');
             students.value = response.data;
         }catch(err){
-            console.log(err);
+            if(err.response.data === 422){
+                errors.value = err.response.data.errors;
+            }
         }
     }
 
@@ -20,6 +23,8 @@ const useStudent = () =>{
             axios.post(baseURL+'/createStudents', data);
         }catch(err){
             console.log(err);
+        }finally{
+            getStudents();  
         }
     }
 
