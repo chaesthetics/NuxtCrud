@@ -5,31 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\StudentRequest;
 class StudentController extends Controller
 {
     //
-    public function createStudent(Request $request)
+    public function createStudent(StudentRequest $request)
     {
         try{
-            $customMessage = [
-                "name.required" => "Fullname is required",
-                "name.min" => "Please use your fullname",
-                "course.required" => "Please fill up the course field",
-                "email.required" => "Your email is required",
-                "email.email" => "Please use a valid email",
-                "phone.required" => "Please enter you phone number",
-                "phone.min" => "Please use valid phone number",
-                "phone.max" => "Please use valid phone number",
-            ];
-            
-            $validatedData = $request->validate([
-                "name" => "required|min:3",
-                "course" => "required",
-                "email" => "required|email",
-                "phone" => "required|min:11|max:11",
-            ], $customMessage);
-
             $student = new Student;
             $student->name = $request->name;
             $student->course = $request->course;
@@ -39,13 +21,13 @@ class StudentController extends Controller
             $student->save();
 
             return response()->json([
-                "status" => true,
-                "message" => "Student has been saved to database",
+                'status' => true,
+                'message' => "Student has been saved to database",
             ], 200);
         }catch(\Throwable $th){
             return response()->json([
-                "status" => false,
-                "message" => $th->getMessage()
+                'status' => false,
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
