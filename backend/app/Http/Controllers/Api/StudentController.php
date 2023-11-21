@@ -41,7 +41,7 @@ class StudentController extends Controller
             return response()->json([
                 "status" => true,
                 "message" => "Student has been saved to database",
-            ]);
+            ], 200);
         }catch(\Throwable $th){
             return response()->json([
                 "status" => false,
