@@ -2,7 +2,7 @@
 import { reactive } from 'vue';
 import useStudent from '../../composables/student';
 
-const { storeStudents } = useStudent();
+const { storeStudents, errors } = useStudent();
 
 const initialState = {
     name: '',
@@ -17,18 +17,7 @@ const isLoading = ref(false);
 const isLoadingTitle = ref('Loading');
 
 const saveStudent = async() => {
-    isLoading.value = true;
-    isLoadingTitle.value = 'Saving';
-
-    try{
-        await storeStudents(student);
-    }catch(err){
-        console.log(err);
-    }finally{
-        isLoading.value = false;
-        isLoadingTitle.value = 'Loading';
-        Object.assign(student, initialState);
-    }
+    await storeStudents(student);
 }
 
 </script>
@@ -47,7 +36,7 @@ const saveStudent = async() => {
                 </div>
                 <form @submit.prevent="saveStudent" v-else>
                     <div class="mb-3">
-                        <label for="name">Name</label>
+                        <label for="name"></label>
                         <input v-model="student.name" id="name" type="text" class="form-control"/>
                     </div>
                     <div class="mb-3">

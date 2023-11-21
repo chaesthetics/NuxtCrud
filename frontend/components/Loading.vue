@@ -11,8 +11,6 @@ const props = defineProps({
         <span class="visually-hidden">Loading...</span>
     </div> {{ props.title }}...
 </div>
-
-
 </template>
 
 <style>
