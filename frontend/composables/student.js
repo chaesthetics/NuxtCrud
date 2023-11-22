@@ -20,18 +20,16 @@ const useStudent = () =>{
 
     const storeStudents = async(data) => {
         try{
-            axios.post(baseURL+'/createStudents', data);
+            await axios.post(baseURL+'/createStudents', data);
         }catch(err){
-            console.log(err);
-        }finally{
-            getStudents();  
+            console.log(err.response.data.message);
         }
     }
-
     return{
         students,
         getStudents,
         storeStudents,
+        errors
     }
 }
 
