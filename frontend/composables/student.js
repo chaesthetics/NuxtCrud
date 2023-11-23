@@ -12,9 +12,7 @@ const useStudent = () =>{
             const response = await axios.get(baseURL+'/getStudents');
             students.value = response.data;
         }catch(err){
-            if(err.response.data === 422){
-                errors.value = err.response.data.errors;
-            }
+                errors.value = err.response.data;
         }
     }
 
@@ -22,7 +20,7 @@ const useStudent = () =>{
         try{
             await axios.post(baseURL+'/createStudents', data);
         }catch(err){
-            console.log(err.response.data.message);
+            errors.value = err.response.data;
         }
     }
     return{
