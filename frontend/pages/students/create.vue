@@ -42,7 +42,7 @@ const saveStudent = async() => {
             <div class="card-header">
                 <h4>
                     Add Student
-                    <NuxtLink class="btn btn-danger float-end" to="/">Back</NuxtLink>
+                    <NuxtLink class="btn btn-danger float-end" to="/students">Back</NuxtLink>
                 </h4>
             </div>
                 <div class="card-body">
@@ -51,7 +51,7 @@ const saveStudent = async() => {
                 </div>
                 <form @submit.prevent="saveStudent" v-else>
                     <div class="mb-3">
-                        <label for="name"></label>
+                        <label for="name">Full name</label>
                         <input v-model="student.name" id="name" type="text" class="form-control"/>
                         <div v-if="validationError.value?.name">
                             <Validator :message="validationError.value.name[0]"/>
