@@ -1,5 +1,7 @@
 import axios from "axios";
+import { useRoute } from "vue-router";
 
+const router = useRoute();
 const useStudent = () =>{
     const students = ref([]);
     const student = ref({});
@@ -10,7 +12,7 @@ const useStudent = () =>{
     const getStudents = async() => {
         try{
             const response = await axios.get(baseURL+'/getStudents');
-            students.value = response.data;
+            students.value = response.data.data;
         }catch(err){
                 errors.value = err.response.data;
         }
@@ -19,6 +21,7 @@ const useStudent = () =>{
     const storeStudents = async(data) => {
         try{
             await axios.post(baseURL+'/createStudents', data);
+            router.push("/students/index");
         }catch(err){
             errors.value = err.response.data;
         }

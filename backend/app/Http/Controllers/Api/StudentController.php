@@ -34,7 +34,18 @@ class StudentController extends Controller
 
     public function getStudents()
     {
-        $students = Student::all();
-        return response()->json($students);
+        try{
+            $students = Student::all();
+            return response()->json([
+                'status' => true,
+                'message' => "Students has been fetched",
+                'data' => $students,
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 }

@@ -2,6 +2,8 @@
 import { reactive } from 'vue';
 import useStudent from '../../composables/student';
 
+const router = useRouter();
+
 const { storeStudents, errors } = useStudent();
 
 const initialState = {

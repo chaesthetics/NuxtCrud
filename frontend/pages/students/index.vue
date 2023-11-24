@@ -1,4 +1,13 @@
 <script setup>
+import { onMounted } from "vue";
+import useStudent from "/composables/student";
+
+const { getStudents, students } = useStudent();
+
+onMounted( () => {
+    getStudents();
+    console.log(students);
+});
 
 </script>
 <template>
@@ -23,7 +32,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    <tr v-for="(student, index) in students" :key="index">
+                        <td>{{ student.id }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.course }}</td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.phone }}</td>
+                        <td>{{ student.created_at }}</td>
+                        <td>
+                            <NuxtLink class="btn btn-primary" to="/students/update">Update</NuxtLink>
+                            <NuxtLink class="btn btn-danger" to="/students/delete">Delete</NuxtLink>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
