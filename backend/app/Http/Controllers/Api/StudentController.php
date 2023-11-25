@@ -34,7 +34,84 @@ class StudentController extends Controller
 
     public function getStudents()
     {
-        $students = Student::all();
-        return response()->json($students);
+        try{
+            $students = Student::all();
+            return response()->json([
+                'status' => true,
+                'message' => "Students has been fetched",
+                'data' => $students,
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function deleteStudent($id)
+    {
+        try{
+            $student = Student::find($id);
+            $student->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => "Student has been deleted",
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function updateStudent(StudentRequest $request, $id){
+        try{
+            $student = Student::find($id);
+            $student->update([
+                'name' => $request->name,
+                'course' => $request->course,
+                'email' => $request ->email,
+                'phone' => $request->phone,
+            ]);
+
+            return response()->json([
+                'status' => true, 
+                'message' => "Student updated successfully",
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function getStudent($id)
+    {
+        try{
+            $student = Student::find($id);
+
+            if($student !== null){
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Student has been fetched successfully',
+                    'data' => $student,
+                ], 200);
+            }else{
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User not found',
+                    'data' => null,
+                ], 404);
+            }
+        }catch(\Throwable $th){
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 }
