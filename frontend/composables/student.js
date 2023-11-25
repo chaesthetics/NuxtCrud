@@ -35,11 +35,31 @@ const useStudent = () =>{
         }
     }
 
+    const getStudent = async(userId) => {
+        try{
+            const response = await axios.get(`${baseURL}/getStudent/${userId}`);
+            student.value = response.data.data;
+        }catch(err){
+            errors.value = err.response,data;
+        }
+    }
+
+    const updateStudent = async(data, userId) => {
+        try{
+            await axios.put(`${baseURL}/updateStudent/${userId}`, data);
+        }catch(err){
+            errors.value = err.response.data;
+        }
+    }
+
     return{
         students,
         getStudents,
         storeStudents,
         deleteStudent,
+        getStudent,
+        student,
+        updateStudent,
         errors
     }
 }

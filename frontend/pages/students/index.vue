@@ -44,7 +44,7 @@ const deleteHandler = async(id) => {
                         <td>{{ student.phone }}</td>
                         <td>{{ student.created_at }}</td>
                         <td>
-                            <NuxtLink class="btn btn-primary" to="/students/update">Update</NuxtLink>
+                            <NuxtLink class="btn btn-primary" :to="`/students/update/${student.id}`">Update</NuxtLink>
                             <button class="btn btn-danger" @click="deleteHandler(student.id)">Delete</button>
                         </td>
                     </tr>
