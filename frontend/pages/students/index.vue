@@ -2,12 +2,16 @@
 import { onMounted } from "vue";
 import useStudent from "/composables/student";
 
-const { getStudents, students } = useStudent();
+const { getStudents, students, deleteStudent } = useStudent();
 
 onMounted( () => {
     getStudents();
-    console.log(students);
 });
+
+const deleteHandler = async(id) => {
+    await deleteStudent(id);
+    await getStudents();
+}
 
 </script>
 <template>
@@ -41,7 +45,7 @@ onMounted( () => {
                         <td>{{ student.created_at }}</td>
                         <td>
                             <NuxtLink class="btn btn-primary" to="/students/update">Update</NuxtLink>
-                            <NuxtLink class="btn btn-danger" to="/students/delete">Delete</NuxtLink>
+                            <button class="btn btn-danger" @click="deleteHandler(student.id)">Delete</button>
                         </td>
                     </tr>
                 </tbody>

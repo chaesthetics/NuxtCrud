@@ -66,4 +66,21 @@ class StudentController extends Controller
             ], 500);
         }
     }
+
+    public function updateStudent(StudentRequest $request, $id){
+        try{
+            $student = Student::find($id);
+            $student->update($request->all());
+
+            return response()->json([
+                'status' => true, 
+                'message' => "Student updated successfully",
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
 }
