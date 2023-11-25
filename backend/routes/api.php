@@ -23,3 +23,4 @@ Route::post('/createStudents', [StudentController::class, 'createStudent']);
 Route::get('/getStudents', [StudentController::class, 'getStudents']);
 Route::delete('/deleteStudent/{id}', [StudentController::class, 'deleteStudent']);
 Route::put('/updateStudent/{id}', [StudentController::class, 'updateStudent']);
+Route::get('/getStudent/{id}', [StudentController::class, 'getStudent']);
