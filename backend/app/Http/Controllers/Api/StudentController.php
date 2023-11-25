@@ -48,4 +48,22 @@ class StudentController extends Controller
             ], 500);
         }
     }
+
+    public function deleteStudent($id)
+    {
+        try{
+            $student = Student::find($id);
+            $student->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => "Student has been deleted",
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
 }
