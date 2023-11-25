@@ -21,15 +21,25 @@ const useStudent = () =>{
     const storeStudents = async(data) => {
         try{
             await axios.post(baseURL+'/createStudents', data);
-            router.push("/students/index");
+            router.push({path: "/students/"});
         }catch(err){
             errors.value = err.response.data;
         }
     }
+
+    const deleteStudent = async(userId) => {
+        try{
+            await axios.delete(`${baseURL}/deleteStudent/${userId}`);
+        }catch(err){
+            errors.value = err.response.data;
+        }
+    }
+
     return{
         students,
         getStudents,
         storeStudents,
+        deleteStudent,
         errors
     }
 }
