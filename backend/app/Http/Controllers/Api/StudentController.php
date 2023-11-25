@@ -83,4 +83,30 @@ class StudentController extends Controller
             ], 500);
         }
     }
+
+    public function getStudent($id)
+    {
+        try{
+            $student = Student::find($id);
+
+            if($student !== null){
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Student has been fetched successfully',
+                    'data' => $student,
+                ], 200);
+            }else{
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User not found',
+                    'data' => null,
+                ], 404);
+            }
+        }catch(\Throwable $th){
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
 }

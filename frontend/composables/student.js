@@ -14,14 +14,14 @@ const useStudent = () =>{
             const response = await axios.get(baseURL+'/getStudents');
             students.value = response.data.data;
         }catch(err){
-                errors.value = err.response.data;
+            errors.value = err.response.data;
         }
     }
 
     const storeStudents = async(data) => {
         try{
             await axios.post(baseURL+'/createStudents', data);
-            router.push({path: "/students/"});
+            errors.value = null;
         }catch(err){
             errors.value = err.response.data;
         }

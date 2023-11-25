@@ -1,10 +1,10 @@
 <script setup>
 import { reactive } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import useStudent from '../../composables/student';
 
-const router = useRouter();
-
 const { storeStudents, errors } = useStudent();
+const router = useRouter();
 
 const initialState = {
     name: '',
@@ -26,15 +26,27 @@ const isLoading = ref(false);
 const isLoadingTitle = ref('Loading');
 
 const saveStudent = async() => {
-    console.log(errors.value?.data?.name[0]);
+
     isLoading.value = true;
     isLoadingTitle.value = 'Saving';
-    console.log(isLoadingTitle.value);
-    await storeStudents(student);
-    isLoading.value = false;
-    isLoadingTitle.value = 'Loading';
 
-    validationError.value = errors.value.data;
+    await storeStudents(student)
+    .then(()=>{
+        isLoading.value = false;
+        isLoadingTitle.value = 'Loading';
+        if(errors.value === null){
+            validationError.value = {
+                name: false,
+                course: false,
+                email: false,
+                phone: false,  
+            }
+            router.push({ path: "/students/"});
+        }else{
+            validationError.value = errors.value.data;
+        }
+    });
+    
 }
 
 </script>
